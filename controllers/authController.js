@@ -5,14 +5,12 @@ const bcrypt = require('bcrypt')
 
 // LOGIN
 router.get('/login', (req, res) => {
-    res.render('auth/login')
+    res.render('/')
 })
 
 router.get('/profile', async (req, res) => {
     const user = await User.findOne({ userId: req.params.userId});
-    res.render('auth/profile', {
-        user
-    })
+    res.render('/')
 })
 
 router.post('/login', async (req, res) => {
@@ -25,7 +23,7 @@ router.post('/login', async (req, res) => {
             if(result){
                 req.session.userId = userToLogin._id
                 req.session.name = userToLogin.name;
-                res.redirect('/events/userEvents')
+                res.redirect('/')
             } else {
                 res.send('no can do ')
             }
@@ -40,17 +38,19 @@ router.post('/signup', async (req, res) => {
         let plainTextPass = req.body.password
         bcrypt.hash(plainTextPass, 10, async (err, hashedPass) => {
             req.body.password = hashedPass
-            let newUser = await User.create(req.body)
+            let newUser = await User.create(req.body);
+            req.session.userId = newUser._id;
+            req.session.name = newUser.name;
             res.send(newUser)
+            res.redirect('/')
 
         });
-        res.redirect('/events')
     }
 });
 
 // SIGN UP
 router.get('/signup', (req, res) => {
-    res.render('auth/signup')
+    res.render('/')
 })
 
 router.get('/logout', (req, res) => {

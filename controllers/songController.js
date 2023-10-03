@@ -5,10 +5,10 @@ const fetch = require('node-fetch')
 
 //  Index, Delete, Upate, Create, Edit, Show
 
-router.get("/", async (req, res) => {
+router.get("/search", async (req, res) => {
     try {
         const query = req.query.q;
-        const accessToken = 'BQBG22sxXfTRSTTWxXY_pG7sS2-VQzjtUf1gf2PvrWuA28N4HOlUuXapkMqH29RbPR0NH9lWOJ_2ywrOcLR5fD0JMlT_hJuTCXDha5cgKUXh75z2G78'
+        const accessToken = 'BQDVWr-sFU0a2RBCpETpamVE1yn8x-OE42Agc42AyvcaEYy5X06krcuoz2mQtoFWuOa2Oeg1IRJgisTe0M6tYsXsWiiQv-NRNfP0IUzcnedjEdLO9Z0'
 
         if (!query){
             res.status(400).json({error: 'search query required'});
