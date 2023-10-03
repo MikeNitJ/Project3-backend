@@ -35,23 +35,25 @@ router.post('/login', async (req, res) => {
 
 
 
-router.post('/signup', async (req, res) => {
-    if (req.body.username && req.body.password) {
-        let plainTextPass = req.body.password
-        bcrypt.hash(plainTextPass, 10, async (err, hashedPass) => {
-            req.body.password = hashedPass
-            let newUser = await User.create(req.body)
-            res.send(newUser)
-
-        });
-        res.redirect('/events')
-    }
-});
 
 // SIGN UP
 router.get('/signup', (req, res) => {
     res.render('auth/signup')
 })
+
+router.post('/signup', async (req, res) => {
+    if (req.body.username && req.body.password) {
+        let plainTextPass = req.body.password
+        
+        return bcrypt.hash(plainTextPass, 10, async (err, hashedPass) => {
+            req.body.password = hashedPass
+            let newUser = await User.create(req.body)
+            res.send(newUser)
+        
+        });
+    }
+    res.json({msg: "pls enter username"})
+});
 
 router.get('/logout', (req, res) => {
     req.session.destroy();
