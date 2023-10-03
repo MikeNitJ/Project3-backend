@@ -8,7 +8,9 @@ const fetch = require('node-fetch')
 router.get("/search", async (req, res) => {
     try {
         const query = req.query.q;
+
         const accessToken = 'BQDVWr-sFU0a2RBCpETpamVE1yn8x-OE42Agc42AyvcaEYy5X06krcuoz2mQtoFWuOa2Oeg1IRJgisTe0M6tYsXsWiiQv-NRNfP0IUzcnedjEdLO9Z0'
+
 
         if (!query){
             res.status(400).json({error: 'search query required'});

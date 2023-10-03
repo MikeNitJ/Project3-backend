@@ -33,25 +33,26 @@ router.post('/login', async (req, res) => {
 
 
 
+
+// SIGN UP
+router.get('/signup', (req, res) => {
+    res.render('auth/signup')
+})
+
 router.post('/signup', async (req, res) => {
     if (req.body.username && req.body.password) {
         let plainTextPass = req.body.password
-        bcrypt.hash(plainTextPass, 10, async (err, hashedPass) => {
+        
+        return bcrypt.hash(plainTextPass, 10, async (err, hashedPass) => {
             req.body.password = hashedPass
             let newUser = await User.create(req.body);
             req.session.userId = newUser._id;
             req.session.name = newUser.name;
             res.send(newUser)
-            res.redirect('/')
-
         });
     }
+    res.json({msg: "pls enter username"})
 });
-
-// SIGN UP
-router.get('/signup', (req, res) => {
-    res.render('/')
-})
 
 router.get('/logout', (req, res) => {
     req.session.destroy();
