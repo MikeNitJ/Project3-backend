@@ -25,7 +25,7 @@ router.post('/login', async (req, res) => {
             if(result){
                 req.session.userId = userToLogin._id
                 req.session.name = userToLogin.name;
-                res.redirect('/events/userEvents')
+                res.send("it works")
             } else {
                 res.send('no can do ')
             }
