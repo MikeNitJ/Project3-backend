@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require('express')
 const morgan = require("morgan");
-// const cors = require("cors")
+const cors = require("cors")
 const session = require('express-session')
 const app = express()
 const PORT = 3040;
@@ -12,14 +12,14 @@ const songController = require('./controllers/songController');
 
 
 app.use(morgan("tiny"));
-// app.use(cors());
+app.use(cors());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json())
 
 app.use(session({ secret: 'coachmike', cookie: {maxAge: 3600000}}))
 
-app.use('/api/signup', authController)
+app.use('/', authController)
 
 app.get("/", (req,res) => {
     res.send("Hello")
