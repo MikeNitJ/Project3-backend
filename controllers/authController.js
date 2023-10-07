@@ -23,7 +23,6 @@ router.post('/login', async (req, res) => {
             if(result){
                 req.session.userId = userToLogin._id
                 req.session.name = userToLogin.name;
-
                 res.send("it works")
 
             } else {

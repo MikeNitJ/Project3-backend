@@ -12,7 +12,7 @@ const songController = require('./controllers/songController');
 
 
 app.use(morgan("tiny"));
-app.use(cors());
+app.use(cors({credentials: true, origin: 'http://localhost:3000', methods:'GET,HEAD,PUT,POST,DELETE'}));
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json())
@@ -20,6 +20,7 @@ app.use(express.json())
 app.use(session({ secret: 'coachmike', cookie: {maxAge: 3600000}}))
 
 app.use('/', authController)
+app.use('/', playlistController)
 
 app.get("/", (req,res) => {
     res.send("Hello")
@@ -27,7 +28,7 @@ app.get("/", (req,res) => {
 
 // own middleware for checking logged in
 app.use((req, res, next) => {
-    console.log(req.session)
+    console.log(req.session, '====')
     if (!req.session.userId){
         res.redirect('/login')
         return
